@@ -45,4 +45,26 @@ public class PercolationTest {
     public void percolates() {
         Assert.assertTrue(percolation.percolates());
     }
+
+    @Test
+    public void percolatesWithAnotherOrder() {
+        Percolation percolation = new Percolation(3);
+        percolation.open(1, 1);
+        percolation.open(0, 1);
+        percolation.open(1, 0);
+        percolation.open(2, 2);
+        percolation.open(2, 1);
+        Assert.assertTrue(percolation.percolates());
+    }
+
+    @Test
+    public void notPercolates() {
+        Percolation percolation = new Percolation(3);
+        percolation.open(1, 0);
+        percolation.open(0, 1);
+
+        percolation.open(2, 2);
+        percolation.open(2, 1);
+        Assert.assertFalse(percolation.percolates());
+    }
 }

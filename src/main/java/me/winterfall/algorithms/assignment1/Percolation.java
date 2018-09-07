@@ -1,6 +1,7 @@
 package me.winterfall.algorithms.assignment1;
 
-import edu.princeton.cs.algs4.StdRandom;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Percolation {
 
@@ -26,24 +27,28 @@ public class Percolation {
         int leftIdx = col > 0 ? idx(row, col-1) : -1;
         int rightIdx = col < n - 1 ? idx(row, col+1) : -1;
         int bottomIdx = row < n - 1 ? idx(row+1, col) : -1;
-        if (upIdx >= 0 && isOpened[upIdx]) {
-            sites[idx] = sites[upIdx];
-        }
-        // 这里循环了3次，可以把left right bottom的数字放在一个HashSet里，
-        // 一次循环的时候如果值与Set中含有的值有相同的话就把值改成打开小块的值
-        markSameValue(idx, leftIdx);
-        markSameValue(idx, rightIdx);
-        markSameValue(idx, bottomIdx);
+
+        Set<Integer> vals = numVals(idx, upIdx, leftIdx, rightIdx, bottomIdx);
+
+        markToMinimalValue(vals);
         openNum++;
     }
 
-    private void markSameValue(int idx, int destIdx) {
-        if (destIdx >= 0 && isOpened[destIdx]) {
-            int rightVal = sites[destIdx];
-            for (int i = 0; i < n*n; i++) {
-                if (isOpened[i] && sites[i] == rightVal) {
-                    sites[i] = sites[idx];
-                }
+    private Set<Integer> numVals(int... indexes) {
+        Set<Integer> numVals = new HashSet<>();
+        for (int idx : indexes) {
+            if (idx > -1 && isOpened[idx]) {
+                numVals.add(sites[idx]);
+            }
+        }
+        return numVals;
+    }
+
+    private void markToMinimalValue(Set<Integer> numVals) {
+        int minVal = numVals.stream().min(Integer::compareTo).get();
+        for (int i = 0; i < n*n; i++) {
+            if (numVals.contains(sites[i])) {
+                sites[i] = minVal;
             }
         }
     }
@@ -71,27 +76,6 @@ public class Percolation {
             }
         }
         return false;
-    }
-
-    public static void main(String[] args) {
-        int N = 100;
-        Percolation percolation = new Percolation(N);
-        int[] idx = new int[N*N];
-        for (int i = 0; i < N*N; i++) {
-            idx[i] = i;
-        }
-
-        StdRandom.shuffle(idx);
-
-        int n = 0;
-        for (int num : idx) {
-            n++;
-            percolation.open(num / N, num % N);
-            if (percolation.percolates()) {
-                System.out.println("Percolated: " + n);
-                break;
-            }
-        }
     }
 
 }
