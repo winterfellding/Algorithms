@@ -29,6 +29,8 @@ public class Percolation {
         if (upIdx >= 0 && isOpened[upIdx]) {
             sites[idx] = sites[upIdx];
         }
+        // 这里循环了3次，可以把left right bottom的数字放在一个HashSet里，
+        // 一次循环的时候如果值与Set中含有的值有相同的话就把值改成打开小块的值
         markSameValue(idx, leftIdx);
         markSameValue(idx, rightIdx);
         markSameValue(idx, bottomIdx);
@@ -55,7 +57,7 @@ public class Percolation {
     }
 
     public boolean isFull(int row, int col) {
-        return isOpen(row, col) && sites[idx(row, col)] < n;
+        return sites[idx(row, col)] < n;
     }
 
     public int numberOfOpenSites() {
