@@ -22,7 +22,7 @@ public class Percolation {
         int idx = idx(row, col);
         isOpened[idx] = true;
 
-        int upIdx = row > 0 ? idx(row - 1, col) : -1;
+        int upIdx = row > 0 ? idx(row-1, col) : -1;
         int leftIdx = col > 0 ? idx(row, col-1) : -1;
         int rightIdx = col < n - 1 ? idx(row, col+1) : -1;
         int bottomIdx = row < n - 1 ? idx(row+1, col) : -1;
