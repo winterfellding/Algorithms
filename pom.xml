@@ -10,7 +10,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>edu.prinston</groupId>
+            <groupId>edu.princeton.cs.algs4</groupId>
             <artifactId>algorithms</artifactId>
             <version>1.0</version>
             <scope>system</scope>
