@@ -1,12 +1,12 @@
 package me.winterfall.algorithms.assignment1;
 
-import edu.princeton.cs.algs4.QuickUnionUF;
+import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class PercolationUnion {
 
     private boolean[] isOpened;
-    private QuickUnionUF unionUF;
-    private int n;
+    private WeightedQuickUnionUF unionUF;
+    private  int n;
     private int openNum;
 
     public PercolationUnion(int n) {
@@ -15,7 +15,7 @@ public class PercolationUnion {
         }
         this.n  = n;
         this.isOpened = new boolean[n*n];
-        this.unionUF = new QuickUnionUF(n*n+2);
+        this.unionUF = new WeightedQuickUnionUF(n*n+2);
 
     }
 
